@@ -1,0 +1,3357 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Account",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "UserLabel"
+    },
+    {
+      "name": "UserSecret"
+    },
+    {
+      "name": "UserSetting"
+    },
+    {
+      "name": "Permission"
+    },
+    {
+      "name": "OperationLog"
+    }
+  ],
+  "paths": {
+    "/sign-out": {
+      "post": {
+        "summary": "注销",
+        "deprecated": false,
+        "description": "",
+        "operationId": "sign-out",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignOutResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/sign-in": {
+      "post": {
+        "summary": "登录",
+        "deprecated": false,
+        "description": "登录接口",
+        "operationId": "sign-in",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "$ref": "#/components/schemas/SignInParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userId": {
+                          "type": "string",
+                          "title": "",
+                          "description": "用户 ID"
+                        },
+                        "token": {
+                          "type": "string"
+                        },
+                        "expiredTime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "userId",
+                        "token",
+                        "expiredTime"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/SignInResult"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/sign-up": {
+      "post": {
+        "summary": "注册",
+        "deprecated": false,
+        "description": "",
+        "operationId": "sign-up",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "password",
+                  "username"
+                ],
+                "$ref": "#/components/schemas/SignUpParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "userId": {
+                          "type": "string",
+                          "title": "",
+                          "description": "用户 ID"
+                        },
+                        "token": {
+                          "type": "string"
+                        },
+                        "expiredTime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "userId",
+                        "token",
+                        "expiredTime"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/SignUpResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/users": {
+      "quer": {
+        "summary": "列举用户",
+        "deprecated": false,
+        "description": "",
+        "operationId": "query-users",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "selector": {
+                    "description": "选择器",
+                    "$ref": "#/definitions/102063396"
+                  },
+                  "pagination": {
+                    "description": "翻页/排序设置",
+                    "$ref": "#/definitions/102020909"
+                  }
+                },
+                "required": [
+                  "selector",
+                  "pagination"
+                ],
+                "$ref": "#/components/schemas/GetUsersParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {},
+                  "$ref": "#/components/schemas/GetUsersResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/user/{userId}": {
+      "get": {
+        "summary": "用户信息",
+        "deprecated": false,
+        "description": "",
+        "operationId": "get-user",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {}
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/GetUserResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "删除用户",
+        "deprecated": false,
+        "description": "",
+        "operationId": "delete-user",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteUserResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/label": {
+      "post": {
+        "summary": "添加/更新标签",
+        "deprecated": false,
+        "description": "",
+        "operationId": "upsert-user-label",
+        "tags": [
+          "UserLabel"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertLabelParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/102063399"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/UpsertLabelResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/labels": {
+      "quer": {
+        "summary": "查询用户标签",
+        "deprecated": false,
+        "description": "",
+        "operationId": "query-user-labels",
+        "tags": [
+          "UserLabel"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/definitions/102063399"
+                          }
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "list"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/GetUserLabelsResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/label/{labelName}": {
+      "get": {
+        "summary": "查询用户标签",
+        "deprecated": false,
+        "description": "",
+        "operationId": "get-user-label",
+        "tags": [
+          "UserLabel"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "labelName",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "type": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/definitions/102063399"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message",
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/GetUserLabelResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "删除用户标签",
+        "deprecated": false,
+        "description": "",
+        "operationId": "delete-user-label",
+        "tags": [
+          "UserLabel"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "labelName",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "type": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message"
+                  ],
+                  "$ref": "#/components/schemas/DeleteUserLabelResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/secret": {
+      "post": {
+        "summary": "创建用户密钥",
+        "deprecated": false,
+        "description": "",
+        "operationId": "create-user-secret",
+        "tags": [
+          "UserSecret"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {},
+                "$ref": "#/components/schemas/CreateUserSecretParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "type": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/definitions/102063402"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message",
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/CreateUserSecretResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/secrets": {
+      "quer": {
+        "summary": "查询用户密钥",
+        "deprecated": false,
+        "description": "",
+        "operationId": "query-user-secrets",
+        "tags": [
+          "UserSecret"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetUserSecretsParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserSecretsResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/secret/{secretKey}": {
+      "get": {
+        "summary": "查询用户密钥",
+        "deprecated": false,
+        "description": "",
+        "operationId": "get-user-secret",
+        "tags": [
+          "UserSecret"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "secretKey",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/102063402"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/GetUserSecretResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "删除用户密钥",
+        "deprecated": false,
+        "description": "",
+        "operationId": "delete-user-secret",
+        "tags": [
+          "UserSecret"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "secretKey",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "type": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "message"
+                  ],
+                  "$ref": "#/components/schemas/DeleteUserSecretResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/secret/{secretKey}/disable": {
+      "patch": {
+        "summary": "禁用用户密钥",
+        "deprecated": false,
+        "description": "",
+        "operationId": "disable-user-secret",
+        "tags": [
+          "UserSecret"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "secretKey",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DisableUserSecretResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/setting": {
+      "post": {
+        "summary": "创建/更新设置项",
+        "deprecated": false,
+        "description": "",
+        "operationId": "upsert-user-setting",
+        "tags": [
+          "UserSetting"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserSettingParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/102063405"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/CreateUserSettingResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/setting/{settingKey}": {
+      "get": {
+        "summary": "查询用户设置项",
+        "deprecated": false,
+        "description": "",
+        "operationId": "get-user-setting",
+        "tags": [
+          "UserSetting"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "settingKey",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/102063405"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/GetUserSettingResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "删除用户设置项",
+        "deprecated": false,
+        "description": "",
+        "operationId": "delete-user-setting",
+        "tags": [
+          "UserSetting"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "settingKey",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteUserSettingResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/settings": {
+      "quer": {
+        "summary": "查询用户设置项",
+        "deprecated": false,
+        "description": "",
+        "operationId": "query-user-settings",
+        "tags": [
+          "UserSetting"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {},
+                  "$ref": "#/components/schemas/GetUserSettingsResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/permission-role": {
+      "post": {
+        "summary": "创建权限角色",
+        "deprecated": false,
+        "description": "",
+        "operationId": "create-permission-role",
+        "tags": [
+          "Permission"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {},
+                "$ref": "#/components/schemas/CreatePermissionRoleParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePermissionRoleResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/permissions": {
+      "quer": {
+        "summary": "查询用户权限",
+        "deprecated": false,
+        "description": "",
+        "operationId": "query-user-permissions",
+        "tags": [
+          "Permission"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {}
+                          }
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "list"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/GetUserPermissionsResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/permission-resources": {
+      "quer": {
+        "summary": "查询权限管理资源",
+        "deprecated": false,
+        "description": "",
+        "operationId": "query-permission-resources",
+        "tags": [
+          "Permission"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/definitions/102063407"
+                          }
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "list"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/GetPermissionResourcesResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/permission-resource/{resourceName}": {
+      "delete": {
+        "summary": "删除权限管理资源",
+        "deprecated": false,
+        "description": "",
+        "operationId": "delete-permission-resource",
+        "tags": [
+          "Permission"
+        ],
+        "parameters": [
+          {
+            "name": "resourceName",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletePermissionResourceResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/permission-resource": {
+      "post": {
+        "summary": "创建/更新权限管理资源",
+        "deprecated": false,
+        "description": "",
+        "operationId": "create-permission-resource",
+        "tags": [
+          "Permission"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {},
+                "$ref": "#/components/schemas/UpsertPermissionResourceParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "$ref": "#/definitions/102063407"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/UpsertPermissionResourceResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/permission-roles": {
+      "quer": {
+        "summary": "查询权限角色",
+        "deprecated": false,
+        "description": "",
+        "operationId": "query-permission-roles",
+        "tags": [
+          "Permission"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer"
+                        },
+                        "list": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/definitions/102063406"
+                          }
+                        }
+                      },
+                      "required": [
+                        "total",
+                        "list"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "$ref": "#/components/schemas/GetPermissionRolesResult",
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/permission-role/{roleName}": {
+      "delete": {
+        "summary": "删除权限角色",
+        "deprecated": false,
+        "description": "",
+        "operationId": "delete-permission-role",
+        "tags": [
+          "Permission"
+        ],
+        "parameters": [
+          {
+            "name": "roleName",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletePermissionRoleResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "summary": "更新权限角色",
+        "deprecated": false,
+        "description": "",
+        "operationId": "update-permission-role",
+        "tags": [
+          "Permission"
+        ],
+        "parameters": [
+          {
+            "name": "roleName",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePermissionRoleParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdatePermissionRoleResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/{userId}/permission-roles": {
+      "put": {
+        "summary": "更新用户权限角色",
+        "deprecated": false,
+        "description": "",
+        "operationId": "update-user-permission-roles",
+        "tags": [
+          "Permission"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {},
+                "$ref": "#/components/schemas/UpdataUserPermissionRolesParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {},
+                  "$ref": "#/components/schemas/UpdataUserPermissionRolesResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/operation-log": {
+      "post": {
+        "summary": "创建操作日志",
+        "deprecated": false,
+        "description": "创建操作日志，任何数据或者状态写操作都会写入操作日志，操作日志具体保存时间由服务端确定，一般少于一年",
+        "operationId": "create-operation-log",
+        "tags": [
+          "OperationLog"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {},
+                "$ref": "#/components/schemas/CreateOperationLogRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOperationLogResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/operation-logs": {
+      "quer": {
+        "summary": "查询操作日志",
+        "deprecated": false,
+        "description": "",
+        "operationId": "query-operation-log",
+        "tags": [
+          "OperationLog"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "selector": {
+                    "$ref": "#/definitions/102063413"
+                  },
+                  "pagination": {
+                    "$ref": "#/definitions/102020909"
+                  }
+                },
+                "$ref": "#/components/schemas/GetOperationLogsParams"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {},
+                  "$ref": "#/components/schemas/GetOperationLogsResult"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GetOperationLogsResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "list": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OperationLog"
+                }
+              },
+              "total": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "total",
+              "list"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ]
+      },
+      "GetOperationLogsParams": {
+        "type": "object",
+        "properties": {
+          "selector": {
+            "$ref": "#/components/schemas/OperationLogSelector"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/ListPagination"
+          }
+        }
+      },
+      "GetPermissionRolesResult": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "ID 编号"
+            },
+            "name": {
+              "type": "string",
+              "description": "名称"
+            },
+            "description": {
+              "type": "string",
+              "title": "",
+              "description": "描述信息"
+            },
+            "createdTime": {
+              "type": "string",
+              "title": "",
+              "description": "创建时间"
+            },
+            "updatedTime": {
+              "type": "string",
+              "title": "",
+              "description": "更新时间"
+            },
+            "deletedTime": {
+              "type": "string",
+              "title": "",
+              "description": "删除时间"
+            },
+            "resources": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PermissionRoleResource"
+              }
+            }
+          },
+          "required": [
+            "resources",
+            "id",
+            "name",
+            "description",
+            "createdTime",
+            "updatedTime",
+            "deletedTime"
+          ]
+        }
+      },
+      "UpsertPermissionResourceResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/PermissionResource"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "UpsertPermissionResourceParams": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "名称，全局唯一"
+          },
+          "description": {
+            "type": "string",
+            "title": "",
+            "description": "描述信息"
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ]
+      },
+      "DeletePermissionResourceResult": {
+        "$ref": "#/components/schemas/RestfulResponse"
+      },
+      "GetPermissionResourcesResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "list": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PermissionResource"
+                }
+              },
+              "total": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "total",
+              "list"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "UpdataUserPermissionRolesResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "list": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PermissionRole"
+                }
+              },
+              "total": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "total",
+              "list"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ]
+      },
+      "UpdataUserPermissionRolesParams": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "名称"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        }
+      },
+      "UpdatePermissionRoleResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "ID 编号"
+              },
+              "name": {
+                "type": "string",
+                "description": "名称"
+              },
+              "description": {
+                "type": "string",
+                "title": "",
+                "description": "描述信息"
+              },
+              "createdTime": {
+                "type": "string",
+                "title": "",
+                "description": "创建时间"
+              },
+              "updatedTime": {
+                "type": "string",
+                "title": "",
+                "description": "更新时间"
+              },
+              "deletedTime": {
+                "type": "string",
+                "title": "",
+                "description": "删除时间"
+              },
+              "resources": {
+                "$ref": "#/components/schemas/PermissionRoleResource"
+              }
+            },
+            "required": [
+              "resources",
+              "id",
+              "name",
+              "description",
+              "createdTime",
+              "updatedTime",
+              "deletedTime"
+            ]
+          }
+        },
+        "required": [
+          "data",
+          "status",
+          "message"
+        ]
+      },
+      "UpdatePermissionRoleParams": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "title": "",
+            "description": "描述信息"
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rules": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "id"
+                        ]
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "value"
+                    ]
+                  },
+                  "description": "匹配规则"
+                },
+                "action": {
+                  "description": "权限动作",
+                  "$ref": "#/components/schemas/PermissionAction"
+                },
+                "roleName": {
+                  "type": "string",
+                  "description": "角色 ID"
+                },
+                "resourceName": {
+                  "type": "string",
+                  "description": "资源名称"
+                }
+              },
+              "required": [
+                "rules",
+                "action",
+                "roleName",
+                "resourceName"
+              ]
+            }
+          }
+        },
+        "required": [
+          "resources",
+          "description"
+        ]
+      },
+      "DeletePermissionRoleResult": {
+        "$ref": "#/components/schemas/RestfulResponse"
+      },
+      "GetUserPermissionsResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "list": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID 编号"
+                    },
+                    "rules": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "id"
+                            ]
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "type",
+                          "value"
+                        ]
+                      },
+                      "description": "匹配规则"
+                    },
+                    "action": {
+                      "description": "权限动作",
+                      "$ref": "#/components/schemas/PermissionAction"
+                    },
+                    "roleName": {
+                      "type": "string",
+                      "description": "角色 ID"
+                    },
+                    "resourceName": {
+                      "type": "string",
+                      "description": "资源名称"
+                    },
+                    "createdTime": {
+                      "type": "string",
+                      "title": "",
+                      "description": "创建时间"
+                    },
+                    "updatedTime": {
+                      "type": "string",
+                      "title": "",
+                      "description": "更新时间"
+                    },
+                    "deletedTime": {
+                      "type": "string",
+                      "title": "",
+                      "description": "删除时间"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "rules",
+                    "action",
+                    "roleName",
+                    "resourceName",
+                    "createdTime",
+                    "updatedTime",
+                    "deletedTime"
+                  ]
+                }
+              },
+              "total": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "total",
+              "list"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "CreatePermissionRoleResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "ID 编号"
+              },
+              "name": {
+                "type": "string",
+                "description": "名称"
+              },
+              "description": {
+                "type": "string",
+                "title": "",
+                "description": "描述信息"
+              },
+              "createdTime": {
+                "type": "string",
+                "title": "",
+                "description": "创建时间"
+              },
+              "updatedTime": {
+                "type": "string",
+                "title": "",
+                "description": "更新时间"
+              },
+              "deletedTime": {
+                "type": "string",
+                "title": "",
+                "description": "删除时间"
+              },
+              "resources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PermissionRoleResource"
+                }
+              }
+            },
+            "required": [
+              "resources",
+              "id",
+              "name",
+              "description",
+              "createdTime",
+              "updatedTime",
+              "deletedTime"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "CreatePermissionRoleParams": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "名称"
+          },
+          "description": {
+            "type": "string",
+            "title": "",
+            "description": "描述信息"
+          },
+          "resources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "rules": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "id"
+                        ]
+                      },
+                      "value": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "value"
+                    ]
+                  },
+                  "description": "匹配规则"
+                },
+                "action": {
+                  "description": "权限动作",
+                  "$ref": "#/components/schemas/PermissionAction"
+                },
+                "resourceName": {
+                  "type": "string",
+                  "description": "资源名称"
+                }
+              },
+              "required": [
+                "rules",
+                "action",
+                "resourceName"
+              ]
+            }
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ]
+      },
+      "DeleteUserSettingResult": {
+        "$ref": "#/components/schemas/RestfulResponse"
+      },
+      "GetUserSettingResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Setting"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetUserSettingsResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "list": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Setting"
+                }
+              },
+              "total": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "total",
+              "list"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ]
+      },
+      "CreateUserSettingResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Setting"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "CreateUserSettingParams": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "名称"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "value"
+        ]
+      },
+      "GetUserSecretsResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "list": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Secret"
+                }
+              },
+              "total": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "total",
+              "list"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ]
+      },
+      "DeleteUserSecretResult": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "object",
+            "properties": {}
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "message"
+        ]
+      },
+      "DisableUserSecretResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Secret"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetUserSecretResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Secret"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetUserSecretsParams": {
+        "properties": {
+          "selector": {
+            "description": "选择器",
+            "$ref": "#/components/schemas/SecretSelector"
+          }
+        },
+        "type": "object"
+      },
+      "GetUserSecretParams": {
+        "type": "object",
+        "properties": {
+          "selector": {
+            "description": "选择器",
+            "$ref": "#/components/schemas/LabelSelector"
+          }
+        }
+      },
+      "CreateUserSecretResult": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "object",
+            "properties": {}
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Secret"
+          }
+        },
+        "required": [
+          "type",
+          "message"
+        ]
+      },
+      "CreateUserSecretParams": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/SecretType"
+          },
+          "deletedTime": {
+            "type": "string",
+            "description": "删除时间",
+            "title": ""
+          },
+          "disabledTime": {
+            "type": "string",
+            "description": "禁用时间"
+          }
+        }
+      },
+      "DeleteUserLabelResult": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "object",
+            "properties": {}
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "message"
+        ]
+      },
+      "GetUserLabelResult": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "object",
+            "properties": {}
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Label"
+          }
+        },
+        "required": [
+          "type",
+          "message"
+        ]
+      },
+      "GetUserLabelsResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "list": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Label"
+                }
+              },
+              "total": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "total",
+              "list"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "UpsertLabelResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Label"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "UpsertLabelParams": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "value"
+        ]
+      },
+      "CreateOperationLogResponse": {
+        "$ref": "#/components/schemas/RestfulResponse"
+      },
+      "CreateOperationLogRequest": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "操作名称"
+          },
+          "operator": {
+            "type": "string",
+            "description": "操作者"
+          }
+        },
+        "required": [
+          "data",
+          "name",
+          "operator"
+        ]
+      },
+      "DeleteUserResult": {
+        "$ref": "#/components/schemas/RestfulResponse"
+      },
+      "GetUserResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "ID 编号"
+              },
+              "username": {
+                "type": "string"
+              },
+              "createdTime": {
+                "type": "string",
+                "title": "",
+                "description": "创建时间"
+              },
+              "updatedTime": {
+                "type": "string",
+                "title": "",
+                "description": "更新时间"
+              },
+              "deletedTime": {
+                "type": "string",
+                "title": "",
+                "description": "删除时间"
+              }
+            },
+            "required": [
+              "id",
+              "username",
+              "createdTime"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "GetUsersResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "list": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID 编号"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "createdTime": {
+                      "type": "string",
+                      "title": "",
+                      "description": "创建时间"
+                    },
+                    "updatedTime": {
+                      "type": "string",
+                      "title": "",
+                      "description": "更新时间"
+                    },
+                    "deletedTime": {
+                      "type": "string",
+                      "title": "",
+                      "description": "删除时间"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "username",
+                    "createdTime"
+                  ]
+                }
+              },
+              "total": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "total",
+              "list"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message",
+          "data"
+        ]
+      },
+      "GetUsersParams": {
+        "type": "object",
+        "properties": {
+          "selector": {
+            "description": "选择器",
+            "$ref": "#/components/schemas/UserSelector"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/ListPagination"
+          }
+        }
+      },
+      "SignOutResult": {
+        "$ref": "#/components/schemas/RestfulResponse"
+      },
+      "SignUpResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              },
+              "userId": {
+                "type": "string",
+                "title": "",
+                "description": "用户 ID"
+              },
+              "expiredTime": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "userId",
+              "token",
+              "expiredTime"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "SignInResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "token": {
+                "type": "string"
+              },
+              "userId": {
+                "type": "string",
+                "title": "",
+                "description": "用户 ID"
+              },
+              "expiredTime": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "userId",
+              "token",
+              "expiredTime"
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "SignUpParams": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "password",
+          "username"
+        ]
+      },
+      "SignInParams": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "username",
+          "password"
+        ]
+      },
+      "OperationLogSelector": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "名称",
+            "nullable": true
+          },
+          "operator": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "name",
+          "operator"
+        ],
+        "nullable": true
+      },
+      "OperationLog": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "description": "操作名称"
+          },
+          "operator": {
+            "type": "string",
+            "description": "操作者"
+          },
+          "description": {
+            "type": "string",
+            "title": "",
+            "description": "操作描述，比如原因"
+          },
+          "createdTime": {
+            "type": "string",
+            "title": "",
+            "description": "创建时间"
+          },
+          "deletedTime": {
+            "type": "string",
+            "title": "",
+            "description": "删除时间"
+          }
+        },
+        "required": [
+          "name",
+          "data",
+          "createdTime",
+          "deletedTime",
+          "operator",
+          "description"
+        ]
+      },
+      "PermissionAction": {
+        "type": "string",
+        "enum": [
+          "All",
+          "Insert",
+          "Delete",
+          "Update",
+          "Query"
+        ]
+      },
+      "PermissionRoleResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID 编号"
+          },
+          "rules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "id"
+                  ]
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "type",
+                "value"
+              ]
+            },
+            "description": "匹配规则"
+          },
+          "action": {
+            "description": "权限动作",
+            "$ref": "#/components/schemas/PermissionAction"
+          },
+          "roleName": {
+            "type": "string",
+            "description": "角色 ID"
+          },
+          "resourceName": {
+            "type": "string",
+            "description": "资源名称"
+          },
+          "createdTime": {
+            "type": "string",
+            "title": "",
+            "description": "创建时间"
+          },
+          "updatedTime": {
+            "type": "string",
+            "title": "",
+            "description": "更新时间"
+          },
+          "deletedTime": {
+            "type": "string",
+            "title": "",
+            "description": "删除时间"
+          }
+        },
+        "required": [
+          "id",
+          "roleName",
+          "resourceName",
+          "action",
+          "rules",
+          "deletedTime",
+          "createdTime",
+          "updatedTime"
+        ]
+      },
+      "PermissionUserRole": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID 编号"
+          },
+          "userId": {
+            "type": "string",
+            "title": "",
+            "description": "用户 ID"
+          },
+          "roleName": {
+            "type": "string",
+            "description": "角色 ID"
+          }
+        },
+        "required": [
+          "userId",
+          "roleName",
+          "id"
+        ]
+      },
+      "PermissionResource": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "内部 ID 编号"
+          },
+          "name": {
+            "type": "string",
+            "description": "名称，全局唯一"
+          },
+          "description": {
+            "type": "string",
+            "title": "",
+            "description": "描述信息"
+          },
+          "createdTime": {
+            "type": "string",
+            "title": "",
+            "description": "创建时间"
+          },
+          "updatedTime": {
+            "type": "string",
+            "title": "",
+            "description": "更新时间"
+          },
+          "deletedTime": {
+            "type": "string",
+            "title": "",
+            "description": "删除时间"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "createdTime",
+          "updatedTime",
+          "deletedTime",
+          "description"
+        ]
+      },
+      "PermissionRole": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID 编号"
+          },
+          "name": {
+            "type": "string",
+            "description": "名称"
+          },
+          "description": {
+            "type": "string",
+            "title": "",
+            "description": "描述信息"
+          },
+          "createdTime": {
+            "type": "string",
+            "title": "",
+            "description": "创建时间"
+          },
+          "updatedTime": {
+            "type": "string",
+            "title": "",
+            "description": "更新时间"
+          },
+          "deletedTime": {
+            "type": "string",
+            "title": "",
+            "description": "删除时间"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "createdTime",
+          "updatedTime",
+          "deletedTime",
+          "description"
+        ]
+      },
+      "Setting": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string",
+            "description": "名称"
+          },
+          "value": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "title": "",
+            "description": "用户 ID"
+          },
+          "createdTime": {
+            "type": "string",
+            "title": "",
+            "description": "创建时间"
+          },
+          "updatedTime": {
+            "type": "string",
+            "title": "",
+            "description": "更新时间"
+          },
+          "deletedTime": {
+            "type": "string",
+            "title": "",
+            "description": "删除时间"
+          }
+        },
+        "required": [
+          "id",
+          "key",
+          "value",
+          "userId",
+          "createdTime"
+        ]
+      },
+      "SettingSelector": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID 编号"
+          },
+          "name": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "title": "",
+            "description": "用户 ID"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "userId"
+        ]
+      },
+      "SecretType": {
+        "type": "string",
+        "enum": [
+          "System",
+          "User"
+        ],
+        "pattern": "^[A-Z]"
+      },
+      "Secret": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/SecretType"
+          },
+          "value": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "title": "",
+            "description": "用户 ID"
+          },
+          "createdTime": {
+            "type": "string",
+            "description": "创建时间",
+            "title": ""
+          },
+          "deletedTime": {
+            "type": "string",
+            "description": "删除时间",
+            "title": ""
+          },
+          "disabledTime": {
+            "type": "string",
+            "description": "禁用时间"
+          }
+        },
+        "required": [
+          "id",
+          "createdTime",
+          "value",
+          "key",
+          "userId",
+          "type"
+        ]
+      },
+      "SecretSelector": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID 编号"
+          },
+          "key": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/SecretType"
+          },
+          "userId": {
+            "type": "string",
+            "title": "",
+            "description": "用户 ID"
+          }
+        },
+        "required": [
+          "id",
+          "key",
+          "userId",
+          "type"
+        ]
+      },
+      "LabelType": {
+        "type": "string",
+        "enum": [
+          "LastSignInUserAgent",
+          "LastSignInReferer",
+          "LastSignInTime",
+          "LastSignInIp",
+          "SignUpIp"
+        ]
+      },
+      "Label": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string",
+            "title": "",
+            "description": "用户 ID"
+          },
+          "createdTime": {
+            "type": "string",
+            "description": "创建时间",
+            "title": ""
+          },
+          "updatedTime": {
+            "type": "string",
+            "description": "更新时间",
+            "title": ""
+          },
+          "deletedTime": {
+            "type": "string",
+            "description": "删除时间",
+            "title": ""
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "value",
+          "createdTime",
+          "userId"
+        ]
+      },
+      "LabelSelector": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID 编号",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/LabelType"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
+            "type": "string",
+            "description": "用户 ID",
+            "title": "",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "userId",
+          "type"
+        ],
+        "nullable": true
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID 编号"
+          },
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "createdTime": {
+            "type": "string",
+            "title": "",
+            "description": "创建时间"
+          },
+          "updatedTime": {
+            "type": "string",
+            "title": "",
+            "description": "更新时间"
+          },
+          "deletedTime": {
+            "type": "string",
+            "title": "",
+            "description": "删除时间"
+          }
+        },
+        "required": [
+          "id",
+          "createdTime",
+          "password",
+          "username"
+        ]
+      },
+      "UserSelector": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "ID 编号",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "username"
+        ],
+        "nullable": true
+      },
+      "RestfulListResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "list": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "total": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "total",
+              "list"
+            ]
+          }
+        },
+        "required": [
+          "data",
+          "status",
+          "message"
+        ]
+      },
+      "RestfulResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "message"
+        ]
+      },
+      "ResponseStatus": {
+        "type": "string",
+        "enum": [
+          "Success",
+          "USER_NOT_EXIST",
+          "USER_ALREADY_EXISTS",
+          "USER_ALREADY_DISABLED",
+          "TOO_MANY_SECRETS",
+          "USER_SECRET_NOT_EXIST",
+          "USER_SECRET_NOT_DISABLED",
+          "SETTING_NOT_EXIST",
+          "SETTING_ALREADY_EXISTS",
+          "PERMISSION_ROLE_NOT_EXIST",
+          "PERMISSION_ROLE_ALREADY_EXISTS",
+          "PERMISSION_RESOURCE_IN_USE",
+          "PERMISSION_RESOURCE_NOT_EXIST",
+          "PERMISSION_RESOURCE_ALREADY_EXISTS"
+        ]
+      },
+      "ListPagination": {
+        "type": "object",
+        "properties": {
+          "Limit": {
+            "type": "integer"
+          },
+          "Offset": {
+            "type": "integer"
+          },
+          "Sort": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "order": {
+                  "type": "string",
+                  "enum": [
+                    "DESC",
+                    "ASC"
+                  ]
+                }
+              },
+              "required": [
+                "key",
+                "order"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": []
+}

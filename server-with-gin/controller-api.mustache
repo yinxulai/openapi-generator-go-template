@@ -1,0 +1,79 @@
+{{>partial_header}}
+package {{packageName}}
+
+{{#operations}}
+import (
+	"context"
+	"net/http"
+	"github.com/gin-gonic/gin"
+)
+
+type {{classname}} struct {
+	service *Unimplemented{{classname}}Service
+}
+
+type Unimplemented{{classname}}Service struct {
+ // Implementing service
+}
+
+{{#operation}}
+type {{classname}}{{nickname}}Params struct {
+	{{#allParams}}
+	{{^isBodyParam}}
+	{{paramName}} {{dataType}}
+	{{/isBodyParam}}
+	{{#isBodyParam}}
+	Body *{{dataType}}
+	{{/isBodyParam}}
+	{{/allParams}}
+}
+
+// {{httpMethod}} {{{basePathWithoutHost}}}{{{path}}}{{#summary}}
+// {{{.}}} {{/summary}}
+{{#isDeprecated}}
+// Deprecated
+{{/isDeprecated}}
+func (api *{{classname}}) {{nickname}}(c *gin.Context) {
+	{{#hasBodyParam}}
+	var err error // error
+	{{/hasBodyParam}}
+	requestParams := &{{classname}}{{nickname}}Params{}
+
+	{{#allParams}}
+	{{#isPathParam}}
+	{{#schema}}
+	requestParams.{{baseName}} = c.Param("{{paramName}}")
+	{{/schema}}
+	{{/isPathParam}}
+	{{#isQueryParam}}
+	{{#schema}}
+	requestParams.{{baseName}} = c.Query("{{paramName}}")
+	{{/schema}}
+	{{/isQueryParam}}
+	{{#isBodyParam}}
+	requestParams.Body = &{{dataType}}{}
+  if err = c.ShouldBind(&requestParams.Body); err != nil {
+    c.JSON(http.StatusOK, 400)
+  }
+	{{/isBodyParam}}
+	{{#isFormParam}}
+	{{/isFormParam}}
+	{{/allParams}}
+
+	// Your handler implementation
+	result := api.service.{{nickname}}(c.Request.Context(), requestParams)
+	c.JSON(http.StatusOK, result)
+}
+
+{{#isDeprecated}}
+// Deprecated
+{{/isDeprecated}}
+func (service *Unimplemented{{classname}}Service) {{nickname}}(ctx context.Context, requestParams *{{classname}}{{nickname}}Params) (result *{{returnType}}) {
+	result = &{{returnType}}{}
+	// Your handler implementation
+
+	return result
+}
+
+{{/operation}}
+{{/operations}}
